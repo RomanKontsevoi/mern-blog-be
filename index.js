@@ -1,10 +1,12 @@
 import express from 'express'
-import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 import { validationResult } from 'express-validator'
 
 import { registerValidation } from './validations/auth.js'
 import { DB_URL } from './constants/general.js'
+import UserModel from './models/User.js'
+import { createToken } from './utils/index.js'
 
 console.log(DB_URL)
 
@@ -20,30 +22,82 @@ app.get('/', (req, res) => {
   res.send('Hello World')
 })
 
-app.post('/auth/register', registerValidation, (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array())
+app.post('/auth/register', registerValidation, async (req, res) => {
+  try {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array())
+    }
+
+    const { email, fullName, password, avatarUrl } = req.body
+
+    const sault = await bcrypt.genSalt(10)
+
+    const passwordHash = await bcrypt.hash(password, sault)
+
+    const doc = new UserModel({
+      email, fullName, passwordHash, avatarUrl,
+    })
+
+    const user = await doc.save()
+
+    const token = createToken(user._id)
+
+    // eslint-disable-next-line
+    const { passwordHash: ph, ...userData } = user._doc
+
+    res.json({
+      ...userData,
+      token,
+    })
+  } catch (e) {
+    console.log(e)
+    res
+      .status(500)
+      .json({
+        message: 'Не удалось зарегистрироваться',
+      })
   }
-
-  res.json({
-    success: true,
-  })
 })
-app.post('/auth/login', (req, res) => {
-  console.log(req.body)
+app.post('/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const user = await UserModel.findOne({
+      email,
+    })
 
-  const { email } = req.body
+    if (!user) {
+      return res.status(404).json({
+        messge: 'Неверный логин или пароль',
+      })
+    }
 
-  const token = jwt.sign({
-    email,
-    fullName: 'Иван Сусанин',
-  }, 'secret123')
+    const isValidPass = await bcrypt
+      .compare(password, user._doc.passwordHash)
 
-  res.json({
-    success: true,
-    token,
-  })
+    if (!isValidPass) {
+      return res.status(404).json({
+        messge: 'Неверный логин или пароль',
+      })
+    }
+
+    const token = createToken(user._id)
+
+    // eslint-disable-next-line
+    const { passwordHash: ph, ...userData } = user._doc
+
+    res.json({
+      ...userData,
+      token,
+    })
+  } catch (e) {
+    console.log(e)
+    res
+      .status(500)
+      .json({
+        message: 'Не удалось авторизоваться',
+      })
+  }
 })
 
 app.listen(4444, (err) => {
