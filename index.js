@@ -6,7 +6,7 @@ import { validationResult } from 'express-validator'
 import { registerValidation } from './validations/auth.js'
 import { DB_URL } from './constants/general.js'
 import UserModel from './models/User.js'
-import { createToken } from './utils/index.js'
+import { checkAuth, createToken } from './utils/index.js'
 
 console.log(DB_URL)
 
@@ -76,7 +76,7 @@ app.post('/auth/login', async (req, res) => {
       .compare(password, user._doc.passwordHash)
 
     if (!isValidPass) {
-      return res.status(404).json({
+      return res.status(400).json({
         messge: 'Неверный логин или пароль',
       })
     }
@@ -96,6 +96,30 @@ app.post('/auth/login', async (req, res) => {
       .status(500)
       .json({
         message: 'Не удалось авторизоваться',
+      })
+  }
+})
+
+app.get('/auth/me', checkAuth, async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.userId)
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Пользователь не найден"
+      })
+    }
+
+    // eslint-disable-next-line
+    const { passwordHash: ph, ...userData } = user._doc
+
+    res.json(userData)
+  } catch (e) {
+    console.log(e)
+    res
+      .status(500)
+      .json({
+        message: 'Нет доступа',
       })
   }
 })
