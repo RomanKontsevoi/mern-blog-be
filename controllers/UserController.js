@@ -5,11 +5,6 @@ import { createToken } from '../utils/index.js'
 
 export const register = async (req, res) => {
   try {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array())
-    }
-
     const { email, fullName, password, avatarUrl } = req.body
 
     const sault = await bcrypt.genSalt(10)
