@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import multer from 'multer'
+import cors from 'cors'
 
 import { loginValidation, postCreateValidation, registerValidation } from './validations/index.js'
 import { DB_URL } from './constants/general.js'
@@ -25,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.use(express.json())
+app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
 app.get('/', (req, res) => {
