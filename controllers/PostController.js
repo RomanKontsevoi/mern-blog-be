@@ -77,7 +77,6 @@ export const getOne = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-  console.log('works')
   try {
     const { title, text, tags, imageUrl } = req.body
 
@@ -120,8 +119,6 @@ export const update = async (req, res) => {
           user: req.userId,
         }
       )
-
-    console.log(doc)
 
     if (!doc) {
       return res.status(404).json({
