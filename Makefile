@@ -14,6 +14,10 @@ run:
 stop:
 	docker stop -t 5 $(IMAGE_NAME)
 
+# Remove the docker container
+remove:
+	docker rm $(IMAGE_NAME)
+
 # Restart the docker container
 restart: stop run
 
