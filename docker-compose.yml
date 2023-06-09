@@ -1,3 +1,4 @@
+# this is needed to fix error with bcrypt
 volumes:
   - ./mern-blog-be:/app # named volume
   - /app/node_modules # anonymous volume for node_modules only

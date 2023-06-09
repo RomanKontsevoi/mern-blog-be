@@ -23,3 +23,7 @@ refresh: build run
 # output app logs
 logs:
 	docker logs $(IMAGE_NAME)
+
+# войти в контейнер в интерактивном режиме
+enter:
+	docker exec -it $(IMAGE_NAME) /bin/bash
