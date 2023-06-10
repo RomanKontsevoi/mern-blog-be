@@ -1,4 +1,18 @@
-# this is needed to fix error with bcrypt
-volumes:
-  - ./mern-blog-be:/app # named volume
-  - /app/node_modules # anonymous volume for node_modules only
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/letsencrypt
+      # this is needed to fix error with bcrypt
+      - ./mern-blog-be:/app # named volume
+      - /app/node_modules # anonymous volume for node_modules only
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=${APP_IP}
+      - LETSENCRYPT_HOST=${APP_IP}
+      - LETSENCRYPT_EMAIL=1604881@gmail.com
