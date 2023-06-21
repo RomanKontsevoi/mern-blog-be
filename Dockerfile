@@ -25,10 +25,10 @@ COPY package*.json ./
 #    rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
-    apt-get install -y make gcc g++ python && \
+    apt-get install -y make gcc g++ python3 && \
     npm install && \
     npm rebuild bcrypt --build-from-source && \
-    apt-get remove -y make gcc g++ python
+    apt-get remove -y make gcc g++ python3
 
 # Копируем все файлы из текущей директории в директорию приложения в контейнере
 COPY . .
