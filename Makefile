@@ -1,10 +1,11 @@
 # Define the name of the docker image (and container)
 IMAGE_NAME = mern-blog-be
 PORT = 4444
+CONTAINER_ID := $(shell docker ps -q -f name=$(IMAGE_NAME))
 
 # Build the docker image from the Dockerfile
 build:
-	docker build  --no-cache -t $(IMAGE_NAME) .
+	docker build  -t $(IMAGE_NAME) .
 
 # Run the docker container from the image
 #The -d option runs the container in detached mode, which means that it runs
@@ -29,6 +30,18 @@ restart: stop run
 # Rebuild and start the new docker container
 refresh: build run
 
+# Rebuild and restart the new docker container
+refresh_r: build restart
+
+# Rebuild and run or restart the new docker container relying on the condition
+refresh_c:
+ifneq ($(CONTAINER_ID),)
+#ifneq ($(strip $(shell docker ps -q -f name=$(IMAGE_NAME))),)
+	make refresh_r
+else
+	make refresh
+endif
+
 # output app logs
 logs:
 	docker logs $(IMAGE_NAME)
@@ -36,3 +49,6 @@ logs:
 # войти в контейнер в интерактивном режиме
 enter:
 	docker exec -it $(IMAGE_NAME) /bin/bash
+
+remove2:
+	docker rm $(CONTAINER_ID)
