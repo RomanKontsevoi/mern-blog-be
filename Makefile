@@ -7,6 +7,11 @@ build:
 	docker build  --no-cache -t $(IMAGE_NAME) .
 
 # Run the docker container from the image
+#The -d option runs the container in detached mode, which means that it runs
+#in the background and does not output anything to the console.
+#The -p option maps the container's port to the host's port.
+#The --name option assigns a name to the container, which can be used to reference it later.
+#The --rm option removes the container automatically when it stops running.
 run:
 	docker run -d -p $(PORT):$(PORT) --name $(IMAGE_NAME) --rm $(IMAGE_NAME)
 
