@@ -3,6 +3,8 @@ IMAGE_NAME = mern-blog-be
 PORT = 4444
 CONTAINER_ID := $(shell docker ps -q -f name=$(IMAGE_NAME))
 
+all: redeploy
+
 # Build the docker image from the Dockerfile
 build:
 	docker build  -t $(IMAGE_NAME) .
