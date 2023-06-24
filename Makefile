@@ -1,7 +1,7 @@
 # Define the name of the docker image (and container)
 IMAGE_NAME = mern-blog-be
 PORT = 4444
-CONTAINER_ID := $(shell docker ps -q -f name=$(IMAGE_NAME))
+CONTAINER_ID := $(shell timeout 2s docker ps -q -f name=$(IMAGE_NAME))
 
 all: redeploy
 
