@@ -55,5 +55,5 @@ remove2:
 	docker rm $(CONTAINER_ID)
 
 redeploy:
-	git pull
+	sudo git pull
 	make refresh_c
