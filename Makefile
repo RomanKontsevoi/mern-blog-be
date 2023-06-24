@@ -2,6 +2,7 @@
 IMAGE_NAME = mern-blog-be
 PORT = 4444
 CONTAINER_ID := $(shell timeout 2s docker ps -q -f name=$(IMAGE_NAME))
+RETRY ?= retry --tries 5 --delay 1000
 
 all: redeploy
 
@@ -56,4 +57,4 @@ remove2:
 
 redeploy:
 	git pull
-	make refresh_c
+	$(RETRY) make refresh_c
