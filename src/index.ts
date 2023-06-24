@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import multer from 'multer'
 import cors from 'cors'
 
-import { loginValidation, postCreateValidation, registerValidation } from './validations/index.js'
+import { loginValidation, postCreateValidation, registerValidation } from './validations'
 import { DB_URL } from './constants/general.js'
 import { checkAuth, handleValidationErrors } from './utils/index.js'
 import { UserController, PostController } from './controllers/index.js'
@@ -53,10 +53,6 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
 app.delete('/posts/:id', checkAuth, PostController.remove)
 
-app.listen(4444, (err) => {
-  if (err) {
-    return console.log(err)
-  }
-
+app.listen(4444, () => {
   console.log('Server OK')
 })
