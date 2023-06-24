@@ -8,7 +8,7 @@ import { DB_URL } from './constants/general.js'
 import { checkAuth, handleValidationErrors } from './utils/index.js'
 import { UserController, PostController } from './controllers/index.js'
 
-// console.log(123)
+console.log(123)
 
 mongoose
   .connect(DB_URL)
