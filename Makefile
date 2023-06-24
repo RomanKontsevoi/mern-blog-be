@@ -36,7 +36,6 @@ refresh_r: build restart
 # Rebuild and run or restart the new docker container relying on the condition
 refresh_c:
 ifneq ($(CONTAINER_ID),)
-#ifneq ($(strip $(shell docker ps -q -f name=$(IMAGE_NAME))),)
 	make refresh_r
 else
 	make refresh
@@ -52,3 +51,7 @@ enter:
 
 remove2:
 	docker rm $(CONTAINER_ID)
+
+redeploy:
+	git pull
+	make refresh_c
