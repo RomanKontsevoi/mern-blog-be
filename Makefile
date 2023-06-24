@@ -55,5 +55,5 @@ remove2:
 	docker rm $(CONTAINER_ID)
 
 redeploy:
-	git --work-tree=/home/ubuntu/$(IMAGE_NAME) pull
+	git pull
 	make refresh_c
