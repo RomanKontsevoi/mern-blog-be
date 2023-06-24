@@ -4,9 +4,9 @@ import multer from 'multer'
 import cors from 'cors'
 
 import { loginValidation, postCreateValidation, registerValidation } from './validations'
-import { DB_URL } from './constants/general.js'
-import { checkAuth, handleValidationErrors } from './utils/index.js'
-import { UserController, PostController } from './controllers/index.js'
+import { DB_URL } from './constants/general'
+import { checkAuth, handleValidationErrors } from './utils/index'
+import { UserController, PostController } from './controllers/index'
 
 console.log(123)
 
