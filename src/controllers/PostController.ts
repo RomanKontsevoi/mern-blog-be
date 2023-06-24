@@ -6,7 +6,6 @@ interface ISortOptions {
   direction: SortOrder
 }
 
-
 export const getAll = async (req, res) => {
   try {
     const { sortBy = 'updatedAt', direction = -1 }: ISortOptions = req.query
