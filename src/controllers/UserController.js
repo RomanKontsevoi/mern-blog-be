@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 import UserModel from '../../models/User.js'
-import { createToken } from '../../utils/index.js'
+import { createToken } from '../utils/index.js'
 
 export const register = async (req, res) => {
   try {

@@ -5,7 +5,7 @@ import cors from 'cors'
 
 import { loginValidation, postCreateValidation, registerValidation } from './validations/index.js'
 import { DB_URL } from './src/constants/general.js'
-import { checkAuth, handleValidationErrors } from './utils/index.js'
+import { checkAuth, handleValidationErrors } from './src/utils/index.js'
 import { UserController, PostController } from './src/controllers/index.js'
 
 mongoose
