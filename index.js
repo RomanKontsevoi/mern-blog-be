@@ -6,7 +6,7 @@ import cors from 'cors'
 import { loginValidation, postCreateValidation, registerValidation } from './validations/index.js'
 import { DB_URL } from './constants/general.js'
 import { checkAuth, handleValidationErrors } from './utils/index.js'
-import { UserController, PostController } from './controllers/index.js'
+import { UserController, PostController } from './src/controllers/index.js'
 
 mongoose
   .connect(DB_URL)

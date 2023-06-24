@@ -1,4 +1,4 @@
-import PostModel from '../models/Post.js'
+import PostModel from '../../models/Post.js'
 
 export const getAll = async (req, res) => {
   try {
