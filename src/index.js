@@ -3,10 +3,10 @@ import mongoose from 'mongoose'
 import multer from 'multer'
 import cors from 'cors'
 
-import { loginValidation, postCreateValidation, registerValidation } from './src/validations/index.js'
-import { DB_URL } from './src/constants/general.js'
-import { checkAuth, handleValidationErrors } from './src/utils/index.js'
-import { UserController, PostController } from './src/controllers/index.js'
+import { loginValidation, postCreateValidation, registerValidation } from './validations/index.js'
+import { DB_URL } from './constants/general.js'
+import { checkAuth, handleValidationErrors } from './utils/index.js'
+import { UserController, PostController } from './controllers/index.js'
 
 mongoose
   .connect(DB_URL)
