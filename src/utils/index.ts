@@ -1,2 +1,2 @@
-export * from './auth.js'
-export { default as handleValidationErrors } from './handleValidtionErrors.js'
+export * from './auth'
+export { default as handleValidationErrors } from './handleValidtionErrors'
