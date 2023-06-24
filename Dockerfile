@@ -16,14 +16,6 @@ COPY package*.json ./
 # Это означает, что команда устанавливает все необходимые зависимости для Bcrypt и перекомпилирует
 # его для использования в контейнере Docker. После этого она удаляет все предварительные условия,
 # чтобы образ Docker был как можно меньше.
-#RUN apt-get update && \
-#    apt-get install -y make gcc g++ python && \
-#    npm install && \
-#    npm rebuild bcrypt --build-from-source && \
-#    apt-get remove -y make gcc g++ python && \
-#    apt-get autoremove -y && \
-#    rm -rf /var/lib/apt/lists/*
-
 RUN apt-get update && \
     apt-get install -y make gcc g++ python3 && \
     npm install && \
