@@ -1,10 +1,19 @@
 import PostModel from '../models/Post'
+import { SortOrder } from 'mongoose'
+
+interface ISortOptions {
+  sortBy: 'updatedAt' | 'viewsCount' | string
+  direction: SortOrder
+}
+
 
 export const getAll = async (req, res) => {
   try {
+    const { sortBy = 'updatedAt', direction = -1 }: ISortOptions = req.query
     const posts = await PostModel
       .find()
       .populate('user')
+      .sort({ [sortBy]: direction })
       .exec()
 
     res.json(posts)
@@ -117,7 +126,7 @@ export const update = async (req, res) => {
           tags,
           imageUrl,
           user: req.userId,
-        }
+        },
       )
 
     if (!doc) {
