@@ -1,4 +1,9 @@
 #!/bin/bash
 
-# Запускаем команду make redeploy
-make redeploy
+IMAGE_NAME="mern-blog-be"
+
+git pull
+
+make build
+make stop
+make run
