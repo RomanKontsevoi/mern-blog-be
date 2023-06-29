@@ -1,5 +1,6 @@
 # Define the name of the docker image (and container)
-IMAGE_NAME = mern-blog-be
+CONTAINER_NAME = mern-blog-be
+IMAGE_NAME := 3844320/$(CONTAINER_NAME)
 PORT = 4444
 
 # Build the docker image from the Dockerfile
@@ -13,15 +14,15 @@ build:
 #The --name option assigns a name to the container, which can be used to reference it later.
 #The --rm option removes the container automatically when it stops running.
 run:
-	docker run -d -p $(PORT):$(PORT) --name $(IMAGE_NAME) --rm $(IMAGE_NAME)
+	docker run -d -p $(PORT):$(PORT) --name $(CONTAINER_NAME) --rm $(IMAGE_NAME)
 
 # Stop the docker container
 stop:
-	docker stop -t 5 $(IMAGE_NAME)
+	docker stop -t 5 $(CONTAINER_NAME)
 
 # Remove the docker container
 remove:
-	docker rm $(IMAGE_NAME)
+	docker rm $(CONTAINER_NAME)
 
 # Restart the docker container
 restart: stop run
@@ -34,11 +35,11 @@ refresh_r: build restart
 
 # output app logs
 logs:
-	docker logs $(IMAGE_NAME)
+	docker logs $(CONTAINER_NAME)
 
 # войти в контейнер в интерактивном режиме
 enter:
-	docker exec -it $(IMAGE_NAME) /bin/bash
+	docker exec -it $(CONTAINER_NAME) /bin/bash
 
 remove2:
-	docker rm $(CONTAINER_ID)
+	docker rm $(CONTAINER_NAME)
