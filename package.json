@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon -r dotenv/config src/index.ts",
-    "start": "tsc && node -r dotenv/config dist/index.js",
+    "build:start": "tsc && node -r dotenv/config dist/index.js",
+    "start": "node -r dotenv/config dist/index.js",
     "build": "tsc",
     "lint": "eslint --fix ./*.js"
   },

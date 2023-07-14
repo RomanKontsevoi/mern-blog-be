@@ -1,5 +1,5 @@
 # Используем официальный образ Node.js в качестве базового образа
-FROM node:18.16.1 as build
+FROM node:18.16.1
 
 # Устанавливаем директорию приложения в контейнере
 WORKDIR /app
@@ -26,23 +26,11 @@ RUN apt update && \
 # Копируем все файлы из текущей директории в директорию приложения в контейнере
 COPY . .
 
-RUN yarn build
-
-# Stage 2: Production stage
-FROM node:18-alpine AS production
-WORKDIR /app
-COPY --from=build /app/dist /app/dist
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/yarn.lock ./
-COPY --from=build /app/.env ./
-RUN yarn --production
-#
-## Установка порта для приложения
+# Установка порта для приложения
 ENV PORT=4444
-#
-## Определение порта, который будет слушать контейнер при запуске
+
+# Определение порта, который будет слушать контейнер при запуске
 EXPOSE $PORT
 
 # Указываем команду запуска приложения
 CMD ["yarn", "start"]
-

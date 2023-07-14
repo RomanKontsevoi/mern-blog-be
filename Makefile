@@ -4,6 +4,10 @@ IMAGE_NAME := 3844320/$(CONTAINER_NAME)
 PORT = 4444
 
 # Build the docker image from the Dockerfile
+build-dev:
+	docker build  -t $(IMAGE_NAME):dev . --network host -f Dockerfile.dev
+
+# Build the docker image from the Dockerfile
 build:
 	docker build  -t $(IMAGE_NAME) . --network host
 
@@ -13,8 +17,15 @@ build:
 #The -p option maps the container's port to the host's port.
 #The --name option assigns a name to the container, which can be used to reference it later.
 #The --rm option removes the container automatically when it stops running.
+run-dev:
+	docker run -d -p $(PORT):$(PORT) --name $(CONTAINER_NAME)-dev --rm $(IMAGE_NAME):dev
+
 run:
 	docker run -d -p $(PORT):$(PORT) --name $(CONTAINER_NAME) --rm $(IMAGE_NAME)
+
+# Stop the docker container
+stop-dev:
+	docker stop -t 5 $(CONTAINER_NAME)-dev
 
 # Stop the docker container
 stop:
